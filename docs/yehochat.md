@@ -65,6 +65,6 @@ cd apps/yehochat/android
 - [部署方案](yehochat-deploy.md)：systemd、nginx、管理口令、证书
 - [协议要点](yehochat-protocol.md)：登录、收发、撤回、名册、身份
 
-## 安全
+## 配置
 
-仓库里没有任何真实凭据。部署时自己生成一套，别复用示例值。
+server/.env.example 与仓库根的 keystore.properties.example 是模板：复制一份填自己的值。真实配置走环境变量或本地未跟踪文件，.gitignore 已排除。

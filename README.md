@@ -90,9 +90,9 @@ apps/                     完整应用（要部署的）
 docs/                     文档（见上方索引）
 ```
 
-## 安全
+## 配置
 
-仓库里**没有任何真实凭据**：服务器地址、签名密钥、SMTP 密码、OSS AccessKey 全部走环境变量或本地未跟踪文件（`.env`、`keystore.properties`、`*.p12` 都在 `.gitignore` 里）。
+仓库只带示例：`apps/yehochat/server/.env.example`、`keystore.properties.example`。复制一份填自己的值即可，真实配置在 `.gitignore` 里，不会入库。
 
 ## 测试
 
