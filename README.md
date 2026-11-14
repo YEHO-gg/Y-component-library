@@ -1,38 +1,35 @@
 # Y-component-library
 
 自用的一个"组件 + 应用"合集。能单独拿走的放 `packages/`，能整套部署的放 `apps/`。
-每个部件都有独立文档，见下方索引。
 
 ![chatview](docs/assets/preview.png)
 
+---
+
 ## 目录
 
-```
-packages/                 可复用组件（pip 装得走的那种）
-└─ chatview/              PySide6 聊天记录视图
-   ├─ ycomponent/         源码（import ycomponent.chatview）
-   ├─ examples/           demo + 离屏截图脚本
-   ├─ tests/              headless 冒烟测试
-   └─ pyproject.toml
+### 🧩 组件 `packages/`
 
-apps/                     完整应用（要部署的）
-└─ yehochat/              自建小圈子聊天
-   ├─ server/             Python 服务端（3 个进程）
-   └─ android/            Android 客户端
+| 部件 | 说明 | 文档 |
+|---|---|---|
+| [chatview](#chatview) | PySide6 聊天记录视图，几千条消息不卡 | [docs/chatview.md](docs/chatview.md) |
 
-docs/                     文档
-├─ chatview.md            组件用法与设计取舍
-├─ yehochat.md            YehoChat 总览：装什么、怎么跑
-├─ yehochat-deploy.md     部署方案（systemd + nginx + 证书）
-└─ yehochat-protocol.md   协议要点
-```
+### 🚀 应用 `apps/`
 
-## 部件索引
+| 部件 | 说明 | 文档 |
+|---|---|---|
+| [YehoChat](#yehochat) | 自建小圈子聊天：Python 服务端 + Android 客户端 | [docs/yehochat.md](docs/yehochat.md) |
 
-| 部件 | 类型 | 一句话 | 文档 |
-|---|---|---|---|
-| **chatview** | 组件 | 用 `QListView + delegate` 画聊天记录，几千条消息不卡 | [docs/chatview.md](docs/chatview.md) |
-| **YehoChat** | 应用 | 自己部署的小圈子聊天：Python 服务端 + Android 客户端 | [docs/yehochat.md](docs/yehochat.md) |
+### 📖 文档 `docs/`
+
+| 文档 | 内容 |
+|---|---|
+| [chatview 组件用法](docs/chatview.md) | API、设计取舍、测试、截图 |
+| [YehoChat 总览](docs/yehochat.md) | 有什么、怎么跑、设计选择 |
+| [部署方案](docs/yehochat-deploy.md) | systemd + nginx + 证书 + 管理口令 |
+| [协议要点](docs/yehochat-protocol.md) | 登录 / 收发 / 撤回 / 名册 / 身份 |
+
+---
 
 ## chatview
 
@@ -72,6 +69,26 @@ python chat_users.py               # :8706 账号与管理
 
 Android 端在 `apps/yehochat/android`，服务器地址走 gradle 属性，不写进源码。
 完整步骤见 [docs/yehochat-deploy.md](docs/yehochat-deploy.md)，协议见 [docs/yehochat-protocol.md](docs/yehochat-protocol.md)。
+
+---
+
+## 仓库结构
+
+```
+packages/                 可复用组件（pip 装得走的那种）
+└─ chatview/              PySide6 聊天记录视图
+   ├─ ycomponent/         源码（import ycomponent.chatview）
+   ├─ examples/           demo + 离屏截图脚本
+   ├─ tests/              headless 冒烟测试
+   └─ pyproject.toml
+
+apps/                     完整应用（要部署的）
+└─ yehochat/              自建小圈子聊天
+   ├─ server/             Python 服务端（3 个进程）
+   └─ android/            Android 客户端
+
+docs/                     文档（见上方索引）
+```
 
 ## 安全
 
