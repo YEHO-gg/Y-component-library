@@ -75,6 +75,14 @@ Android 端在 `apps/yehochat/android`，服务器地址走 gradle 属性，不�
 
 ---
 
+## CHRONOS 时光
+
+一个安静、克制、零依赖零构建的在线时钟：实时本地时间（含农历、今日进度）、8 个城市的世界时间、毫秒级秒表、倒计时、专注视图。**页面不请求任何外部资源，断网也能用。**
+
+    cd apps/chronos
+    python -m http.server 8000
+
+预览图：`apps/chronos/preview.png`。部署是纯静态：Nginx 配置在 `apps/chronos/deploy/nginx.conf`，步骤见 [docs/chronos-deploy.md](docs/chronos-deploy.md)。
 ## 仓库结构
 
 ```
