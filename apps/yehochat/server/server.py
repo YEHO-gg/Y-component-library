@@ -6,8 +6,13 @@ YEHO Chat Server v4
 - 消息：仅文字，带 发送人(name/uuid)
 - 缓存：只保留最近 1 天且最多 150 条，每 10 秒循环清理
 """
-import asyncio, json, time, logging, ssl, sqlite3, os, re
+import asyncio, json, time, logging, ssl, sqlite3, os, re, shutil, sys
 import websockets
+
+# 先读 .env，再读 os.environ；否则环境变量里的 SMTP/OSS 配置会被忽略
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import yeho_env
+yeho_env.load_env()
 
 # ---- 可移植配置（开源版新增）------------------------------------------
 # 所有路径与凭据都从环境变量读，源码里不再出现真实服务器路径。
@@ -16,6 +21,16 @@ _CHAT_DIR = os.environ.get("YEHOO_CHAT_DIR") or os.path.join(
 _UPDATE_DIR = os.environ.get("YEHOO_UPDATE_DIR") or os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "update")
 # ----------------------------------------------------------------------
+
+os.makedirs(_CHAT_DIR, exist_ok=True)
+
+# 老版本把 chat.db 放在代码目录，升级后自动搬进 YEHOO_CHAT_DIR，避免"消息全没了"
+_legacy_db = os.path.join(os.path.dirname(os.path.abspath(__file__)), "chat.db")
+if os.path.exists(_legacy_db) and not os.path.exists(os.path.join(_CHAT_DIR, "chat.db")):
+    try:
+        shutil.move(_legacy_db, os.path.join(_CHAT_DIR, "chat.db"))
+    except OSError:
+        pass
 
 
 PORT = 8705

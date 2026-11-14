@@ -1,0 +1,19 @@
+[Unit]
+Description=YehoChat users & admin API (HTTP :8706)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/yehochat/server
+ExecStart=/opt/yehochat/server/.venv/bin/python /opt/yehochat/server/chat_users.py
+User=yehochat
+Restart=always
+RestartSec=3
+# SMTP 授权码等放这里（权限 600）
+EnvironmentFile=-/etc/yehochat/yehochat.env
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

@@ -8,10 +8,15 @@ YehoChat 用户服务 (HTTP :8706)
 - 管理：用户列表 / 搜索 / 封禁 / 解封 / 删除 / 强制改
 - 鉴权：所有敏感操作校验登录K（X-Chat-Token）
 """
-import io, os, re, ssl, json, time, hmac, random, string, hashlib, sqlite3, smtplib, threading, sys
+import io, os, re, ssl, json, time, hmac, random, string, hashlib, sqlite3, smtplib, threading, sys, shutil
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse, parse_qs
 from email.mime.text import MIMEText
+
+# 先读 .env，再读 os.environ（否则下面 SMTP_* 拿到的还是空值）
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import yeho_env
+yeho_env.load_env()
 
 # ---- 可移植配置（开源版新增）------------------------------------------
 # 所有路径与凭据都从环境变量读，源码里不再出现真实服务器路径。
@@ -24,8 +29,31 @@ _UPDATE_DIR = os.environ.get("YEHOO_UPDATE_DIR") or os.path.join(
 
 PORT = 8706
 BASE = os.path.dirname(os.path.abspath(__file__))
-DB = os.path.join(BASE, "chat.db")
-LOG_FILE = os.path.join(BASE, "users.log")
+os.makedirs(_CHAT_DIR, exist_ok=True)
+# 账号库、日志、发号文件都必须和消息库（server.py 的 chat.db）在同一个目录，
+# 否则两个进程各写各的库：注册/登录链路直接断，管理口令插哪个库都是 401。
+DB = os.path.join(_CHAT_DIR, "chat.db")
+LOG_FILE = os.path.join(_CHAT_DIR, "users.log")
+UID_SEQ_FILE = os.path.join(_CHAT_DIR, "uid_seq")
+
+
+def _migrate_legacy_paths():
+    """老版本把这几个文件放在代码目录（BASE），这里一次性搬进 _CHAT_DIR。
+
+    只在「目标不存在、源存在」时搬，所以重复启动不会覆盖新数据。
+    升级最怕的是账号"凭空消失"，所以这个迁移必须自动做、并且记一行日志。
+    """
+    moved = []
+    for name in ("chat.db", "users.log", "uid_seq"):
+        src = os.path.join(BASE, name)
+        dst = os.path.join(_CHAT_DIR, name)
+        if os.path.exists(src) and not os.path.exists(dst):
+            try:
+                shutil.move(src, dst)
+                moved.append(name)
+            except OSError:
+                pass
+    return moved
 
 # ---- 163 邮箱 ----
 SMTP_HOST = os.environ.get("YEHOO_SMTP_HOST", "smtp.example.com")
@@ -86,6 +114,15 @@ def db_init():
         last_ts   INTEGER NOT NULL,
         created   INTEGER NOT NULL
     )""")
+    # tokens: 管理口令表。以前只在 schema.sql 的导出快照里出现过，全新安装时
+    # 根本没有这张表，于是部署文档让 INSERT 会直接 no such table，管理端必然 401。
+    c.execute("""CREATE TABLE IF NOT EXISTS tokens (
+        token      TEXT PRIMARY KEY,
+        username   TEXT NOT NULL,
+        role       TEXT NOT NULL DEFAULT 'user',
+        banned     INTEGER NOT NULL DEFAULT 0,
+        created_at INTEGER NOT NULL
+    )""")
     # archived: 归档（软删除）。归档的账号不出现在用户列表、不能登录，
     # 名册里会被挂进 archived 名单让客户端显示成「（用户已注销）」；
     # 但账号行、消息、引用一律不动，随时可以恢复。
@@ -114,7 +151,7 @@ def default_uuid(email):
     return s
 
 
-UID_SEQ_FILE = os.path.join(BASE, "uid_seq")
+UID_SEQ_FILE = os.path.join(_CHAT_DIR, "uid_seq")   # 见文件顶部：和 DB 同目录
 
 
 def _read_seq():
@@ -1002,6 +1039,9 @@ class H(BaseHTTPRequestHandler):
 
 
 def main():
+    moved = _migrate_legacy_paths()
+    if moved:
+        log.warning("已把老版数据从 %s 迁到 %s：%s", BASE, _CHAT_DIR, "、".join(moved))
     db_init()
     threading.Thread(target=cleanup, daemon=True).start()
     log.info("YehoChat users v1 on 127.0.0.1:%d", PORT)

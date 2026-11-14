@@ -48,6 +48,11 @@ import zipfile
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse, parse_qs, unquote
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+import yeho_env                      # 先加载 .env，再读 os.environ
+yeho_env.load_env()
+
 # ---- 可移植配置（开源版新增）------------------------------------------
 # 所有路径与凭据都从环境变量读，源码里不再出现真实服务器路径。
 _CHAT_DIR = os.environ.get("YEHOO_CHAT_DIR") or os.path.join(
@@ -62,8 +67,6 @@ PORT = 8811
 APP = "yehochat"
 APP_DIR = os.path.join(BASE, APP)
 MANIFEST = os.path.join(APP_DIR, "manifest.json")
-
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import yeho_oss as OSS               # 阿里云 OSS：主存储 + 签名下载 URL
 

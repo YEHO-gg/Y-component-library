@@ -1,0 +1,19 @@
+[Unit]
+Description=YehoChat update service (HTTP :8811)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/yehochat/server
+ExecStart=/opt/yehochat/server/.venv/bin/python /opt/yehochat/server/update_srv.py
+User=yehochat
+Restart=always
+RestartSec=3
+# OSS_ACCESS_KEY_ID / OSS_ACCESS_KEY_SECRET 放这里（权限 600）
+EnvironmentFile=-/etc/yehochat/oss.env
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

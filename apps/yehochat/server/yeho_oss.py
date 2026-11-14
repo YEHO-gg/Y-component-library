@@ -33,8 +33,15 @@ YehoOSS —— 阿里云 OSS 读写（YehoChat 安装包分发用）
 
 import os
 
-import oss2
-from oss2.credentials import EcsRamRoleCredentialsProvider
+try:
+    import oss2
+    from oss2.credentials import EcsRamRoleCredentialsProvider
+
+    _OSS_IMPORT_ERROR = None
+except ImportError as exc:          # 没装 oss2 时不炸在 import，而是等真正用到再报清楚
+    oss2 = None
+    EcsRamRoleCredentialsProvider = None
+    _OSS_IMPORT_ERROR = exc
 
 BUCKET = "yeho-storage-service-pool"
 
@@ -53,6 +60,10 @@ _auth_src = ""
 def _auth():
     """全进程共用一个 auth 对象（RAM 角色模式下它自己会缓存并续期 STS）。"""
     global _auth_obj, _auth_src
+    if oss2 is None:
+        raise RuntimeError(
+            "缺少 oss2 依赖，更新服务无法访问 OSS：pip install -r requirements.txt"
+            "（原始错误：%s）" % _OSS_IMPORT_ERROR)
     if _auth_obj is None:
         ak = (os.environ.get("OSS_ACCESS_KEY_ID") or "").strip()
         sk = (os.environ.get("OSS_ACCESS_KEY_SECRET") or "").strip()

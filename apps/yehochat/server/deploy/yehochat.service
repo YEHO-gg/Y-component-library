@@ -1,0 +1,20 @@
+[Unit]
+Description=YehoChat chat server (WSS :8705)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# 改成实际部署路径与运行用户
+WorkingDirectory=/opt/yehochat/server
+ExecStart=/opt/yehochat/server/.venv/bin/python /opt/yehochat/server/server.py
+User=yehochat
+Restart=always
+RestartSec=3
+# 真环境变量优先于 .env；密钥放这里（权限 600），别写进仓库
+EnvironmentFile=-/etc/yehochat/yehochat.env
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

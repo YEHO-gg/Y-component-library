@@ -1,0 +1,10 @@
+# 复制成 gradle.properties 后填自己的值（真正的 gradle.properties 不进仓库）
+# 注意：project 级属性（当前目录这份）优先于 ~/.gradle/gradle.properties
+
+org.gradle.jvmargs=-Xmx2048m
+android.useAndroidX=true
+
+# 服务器地址：域名或 IP，不带协议和端口
+chatHost=your-domain-or-ip
+chatWsPort=8705
+chatGatePort=8443

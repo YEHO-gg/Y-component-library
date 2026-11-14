@@ -42,7 +42,7 @@
 
 ```bash
 cd packages/chatview
-pip install pyside6
+pip install -e .                # 必须装成本地包，demo 里是 from ycomponent.chatview import ...
 python examples/demo.py
 ```
 
@@ -60,14 +60,15 @@ view.append_message(Message(uid=2, name="她", text="在"))
 
 ## YehoChat
 
-十几个人、长期住一个房间、不依赖第三方平台。有账号体系、引用/撤回、改名广播、多设备同时在线、管理端。
+十几个人、长期住一个房间、不依赖第三方平台。有账号体系、引用/撤回、改名广播、管理端。登录是**单端**的：新设备登录会把旧连接顶下去。
 
 ```bash
 cd apps/yehochat/server
 pip install -r requirements.txt
 python gen_cert.py                 # 首次：自签证书
-python server.py                   # :8705 聊天（WSS）
-python chat_users.py               # :8706 账号与管理
+python server.py                   # :8705 聊天（WSS，客户端直连，需对外开放）
+python chat_users.py               # :8706 账号与管理（HTTP）
+python update_srv.py               # :8811 版本/更新信息（HTTP）
 ```
 
 Android 端在 `apps/yehochat/android`，服务器地址走 gradle 属性，不写进源码。
@@ -77,7 +78,7 @@ Android 端在 `apps/yehochat/android`，服务器地址走 gradle 属性，不�
 
 ## CHRONOS 时光
 
-一个安静、克制、零依赖零构建的在线时钟：实时本地时间（含农历、今日进度）、8 个城市的世界时间、毫秒级秒表、倒计时、专注视图。**页面不请求任何外部资源，断网也能用。**
+一个安静、克制、零依赖零构建的在线时钟：实时本地时间（含农历、今日进度）、世界时间（本地 + 8 个城市）、百分秒秒表、倒计时、专注视图。**页面不请求任何外部资源**——首次加载后断网仍能继续运行（没有 Service Worker，断网后刷新不在保证范围内）。
 
     cd apps/chronos
     python -m http.server 8000
@@ -107,17 +108,23 @@ docs/                     文档（见上方索引）
 
 ## 配置
 
-仓库只带示例：`apps/yehochat/server/.env.example`、`keystore.properties.example`。复制一份填自己的值即可，真实配置在 `.gitignore` 里，不会入库。
+仓库只带示例：`apps/yehochat/server/.env.example`、`apps/yehochat/keystore.properties.example`。复制一份填自己的值即可，真实配置在 `.gitignore` 里，不会入库。
 
 ## 测试
 
 ```bash
 cd packages/chatview
-QT_QPA_PLATFORM=offscreen python tests/run_tests.py    # 不装 pytest 也能跑
-QT_QPA_PLATFORM=offscreen python -m pytest tests -q
+pip install -e ".[dev]"                                # 或 pip install -e . pytest
+python tests/run_tests.py                              # 4 个用例，不需要 pytest
+python -m pytest tests -q                              # 同一批用例走 pytest
 ```
 
-CI 在 `.github/workflows/test.yml`，同一套命令。
+两个脚本内部都会 `setdefault("QT_QPA_PLATFORM", "offscreen")`，不用手动加环境变量前缀
+（PowerShell 里真要加的话写成 `$env:QT_QPA_PLATFORM="offscreen"; python ...`）。
+
+CI 在 `.github/workflows/test.yml`：**windows-latest + Python 3.12**，只跑 `python -m pytest tests -q`，
+且只覆盖 `packages/chatview`。`apps/yehochat` 和 `apps/chronos` 目前没有任何 CI。
+Python 版本要求：`packages/chatview` 是 `>=3.10`（见 `pyproject.toml`），仓库其余部分是脚本级，无版本声明。
 
 ## License
 
