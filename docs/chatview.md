@@ -8,7 +8,7 @@ pip install pyside6
 python examples/demo.py        # 带假消息的 demo，每 4 秒来一条新消息
 ```
 
-![preview](assets/preview.png)
+![preview](../packages/chatview/docs/preview.png)
 
 ## 为什么不用 QScrollArea
 

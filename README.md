@@ -2,8 +2,6 @@
 
 自用的一个"组件 + 应用"合集。能单独拿走的放 `packages/`，能整套部署的放 `apps/`。
 
-![chatview](docs/assets/preview.png)
-
 ---
 
 ## 目录
@@ -52,6 +50,8 @@ view = ChatView(my_uid=1, name_of=lambda m: m.name, theme="dark")
 view.set_messages([Message(uid=1, name="我", text="在吗", mine=True)])
 view.append_message(Message(uid=2, name="她", text="在"))
 ```
+
+![chatview](packages/chatview/docs/preview.png)
 
 细节（几何缓存、时间分隔、引用块、浮标）见 [docs/chatview.md](docs/chatview.md)。
 

@@ -28,7 +28,7 @@ FONT_CANDIDATES = [
 
 
 def main() -> int:
-    out = sys.argv[1] if len(sys.argv) > 1 else "docs/preview.png"
+    out = sys.argv[1] if len(sys.argv) > 1 else "docs/preview.png"   # 相对 packages/chatview
     app = QApplication(sys.argv[:1])
     for path in FONT_CANDIDATES:
         if os.path.exists(path):
