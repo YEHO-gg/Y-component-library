@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tab 栏：白底 + 顶上一条浅分隔线 -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/bg_card" />
+        </shape>
+    </item>
+    <item android:height="1dp" android:gravity="top">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/line_soft" />
+        </shape>
+    </item>
+</layer-list>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  FileProvider 能对外暴露哪些目录。
+
+  只开「缓存目录下的 updates/」这一个子目录 —— 应用内更新下载的包和解压出来的
+  apk 都放那儿（见 UpdateChecker）。别开整个 cacheDir、更别开 filesDir：
+  filesDir 里放着 msg_cache.txt（聊天记录），暴露出去等于把聊天记录敞开给
+  任何拿到 URI 的应用。
+-->
+<paths>
+    <cache-path name="updates" path="updates/" />
+</paths>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 气泡内的引用块：浅灰底 + 小圆角，左侧竖线用 View 单独画 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/bg_pressed" />
+    <corners android:radius="@dimen/radius_small" />
+</shape>

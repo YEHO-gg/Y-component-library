@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 尺寸 token：散落的 dp 收拢到这里，布局与 Java 共用同一份 -->
+<resources>
+    <!-- 圆角：小圆角风格（微信那种"趋向长方形"的气泡） -->
+    <dimen name="radius_small">6dp</dimen>
+    <dimen name="radius_tail">2dp</dimen>
+    <dimen name="radius_card">10dp</dimen>
+    <dimen name="radius_field">8dp</dimen>
+
+    <!-- 底部 Tab 栏 -->
+    <dimen name="tabbar_height">56dp</dimen>
+    <dimen name="tab_icon">22dp</dimen>
+    <dimen name="tab_text">11sp</dimen>
+
+    <!-- 聊天区 -->
+    <dimen name="bubble_text">16sp</dimen>
+    <dimen name="bubble_name">13sp</dimen>
+    <dimen name="bubble_time">12sp</dimen>
+    <dimen name="bubble_pad_h">14dp</dimen>
+    <dimen name="bubble_pad_v">10dp</dimen>
+    <dimen name="bubble_gap">8dp</dimen>
+    <!-- 连续消息之间收紧 -->
+    <dimen name="bubble_gap_tight">2dp</dimen>
+
+    <dimen name="topbar_height">56dp</dimen>
+</resources>

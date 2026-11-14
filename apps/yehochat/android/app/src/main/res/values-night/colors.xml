@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  YehoChat 色板（深色）—— 夜间模式。
+
+  ★ 只覆写 values/colors.xml 里的同名 token，一个新增名字都没有。
+    因为全项目 0 处硬编码色值、所有颜色都走 @color/，所以这一个文件
+    就能翻转整个 App —— 布局和 Java 一行都不用改。
+
+  深色下的对比度约定（跟浅色版是对称的，别搞反）：
+    · 深色底 (#121417 / #1C1F24) 上一律用 text_body #E6E9ED 作正文，
+      绝不用深灰字，避免"深字配深底"。
+    · 对方气泡 #23272E 比页面底 #121417 亮一点点，靠这点亮度差分开，
+      不够明显时再靠 line_soft 描边（bubble_other 那个 drawable 本来就带描边）。
+    · 强调色（主色/危险/正常/警告）在深底上都要提亮 —— 浅色版那几个色值
+      是给白底调的，直接搬过来会糊成一团看不清。
+    · 半透明的两个（highlight 闪烁层 / jump_bg 回到最底部）色值不变：
+      它们本来就是叠在内容上的，深色下同样成立。
+-->
+<resources>
+    <!-- ============ 设计 token（与浅色版一一对应） ============ -->
+    <!-- 背景：比纯黑亮一点，纯黑上放卡片会显得刺眼 -->
+    <color name="bg_page">#121417</color>
+    <!-- 卡片 / 面板 / 顶栏 / 输入栏 -->
+    <color name="bg_card">#1C1F24</color>
+    <!-- 点击态 / 引用块底色 -->
+    <color name="bg_pressed">#262A31</color>
+
+    <!-- 文字 -->
+    <color name="text_body">#E6E9ED</color>
+    <!-- 主色：深底上要提亮，浅色版那个 #3E7A8C 在深底上几乎看不见 -->
+    <color name="text_primary">#6FB3C8</color>
+    <color name="text_sub">#9AA3AD</color>
+    <color name="text_muted">#7C858F</color>
+    <color name="text_hint">#6B747E</color>
+    <color name="text_on_accent">#FFFFFF</color>
+
+    <!-- 分隔线 -->
+    <color name="line">#2A2E35</color>
+    <color name="line_soft">#2A2E35</color>
+
+    <!-- 气泡 -->
+    <!-- 自己发出的气泡：深青，跟对方的深灰拉开色相差别 -->
+    <color name="bubble_mine">#2A4A57</color>
+    <!-- 对方气泡：深灰，比页面底亮一档 -->
+    <color name="bubble_other">#23272E</color>
+    <!-- 闪烁高亮层：不变的琥珀，深底上反而更醒目 -->
+    <color name="highlight">#5CFFB300</color>
+    <!-- 「回到最底部」浮层：不变的半透明主色 -->
+    <color name="jump_bg">#E63E7A8C</color>
+
+    <!-- 状态：在深底上一律提亮 -->
+    <color name="danger">#E06C5A</color>
+    <color name="ok">#4CAF7D</color>
+    <color name="warn">#D4A24C</color>
+
+    <!-- ============ 兼容别名（跟浅色版保持同义） ============ -->
+    <color name="accent">#6FB3C8</color>
+    <color name="input_bg">#1C1F24</color>
+    <color name="input_line">#2A2E35</color>
+    <color name="tab_selected">#6FB3C8</color>
+    <color name="tab_normal">#7C858F</color>
+    <color name="divider">#2A2E35</color>
+</resources>

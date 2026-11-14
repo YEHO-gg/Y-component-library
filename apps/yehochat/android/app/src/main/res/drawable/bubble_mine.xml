@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 自己的气泡：浅蓝底 + 深色字；小圆角，右下角收一点当"尾巴" -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/bubble_mine" />
+    <corners
+        android:topLeftRadius="@dimen/radius_small"
+        android:topRightRadius="@dimen/radius_small"
+        android:bottomLeftRadius="@dimen/radius_small"
+        android:bottomRightRadius="@dimen/radius_tail" />
+</shape>

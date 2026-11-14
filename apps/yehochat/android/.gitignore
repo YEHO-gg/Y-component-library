@@ -1,0 +1,33 @@
+# secrets ? never commit these
+keystore.properties
+*.p12
+*.jks
+*.keystore
+*.pem
+*.key
+local.properties
+gradle.properties.local
+
+# build output
+build/
+.gradle/
+.idea/
+*.iml
+captures/
+.externalNativeBuild/
+.cxx/
+
+# python
+__pycache__/
+*.pyc
+.venv/
+data/
+*.log
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# editor / os
+.DS_Store
+Thumbs.db

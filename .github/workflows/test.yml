@@ -6,8 +6,11 @@ on:
   pull_request:
 
 jobs:
-  smoke:
+  chatview:
     runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: packages/chatview
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

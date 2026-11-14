@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      主题基座。父主题用 DayNight 而不是 Light —— 这是夜间模式能工作的前提：
+      只有 DayNight 系主题才会去挑 values-night/ 下的资源。换成 Light 的话
+      values-night/colors.xml 会被完全忽略，不管 AppCompatDelegate 怎么设。
+
+      夜间那一份只改两个开关（状态栏/导航栏图标明暗），见 values-night/themes.xml；
+      颜色 token 由 values-night/colors.xml 覆写，这里不用重复写。
+    -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/bg_page</item>
+        <item name="android:statusBarColor">@color/bg_card</item>
+        <item name="android:navigationBarColor">@color/bg_card</item>
+        <!-- 浅底 -> 状态栏/导航栏图标转深色，否则白字配白底看不见 -->
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:textColorPrimary">@color/text_body</item>
+        <item name="android:textColorSecondary">@color/text_sub</item>
+        <item name="android:textColorHint">@color/text_hint</item>
+        <item name="colorAccent">@color/text_primary</item>
+        <item name="colorPrimary">@color/text_primary</item>
+        <item name="colorPrimaryDark">@color/bg_card</item>
+        <item name="colorControlNormal">@color/text_muted</item>
+        <item name="colorControlActivated">@color/text_primary</item>
+    </style>
+</resources>

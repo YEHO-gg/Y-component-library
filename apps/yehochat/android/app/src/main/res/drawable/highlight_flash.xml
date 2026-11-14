@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  引用跳转时套在目标气泡上的高亮层（走 View.setForeground，画在子视图之上）。
+  圆角与 bubble_mine / bubble_other 保持一致，四角都按 radius_small 走 ——
+  气泡右下角本来是 radius_tail（2dp），高亮层这里不做区分，差 4dp 看不出来，
+  但省掉一套「高亮版气泡」的重复 drawable。
+  透明度由 ObjectAnimator 动 "alpha"，这里给满值即可。
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/highlight" />
+    <corners android:radius="@dimen/radius_small" />
+</shape>

@@ -1,7 +1,40 @@
+# ---- secrets（永不入库）----
+.env
+keystore.properties
+*.p12
+*.jks
+*.keystore
+*.pem
+*.key
+local.properties
+
+# ---- python ----
 __pycache__/
 *.py[cod]
+.venv/
 .pytest_cache/
 build/
 dist/
 *.egg-info/
-.venv/
+
+# ---- 运行时数据 ----
+data/
+*.log
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+update/
+
+# ---- android / gradle ----
+.gradle/
+android/**/build/
+captures/
+.externalNativeBuild/
+.cxx/
+*.iml
+.idea/
+
+# ---- os / editor ----
+.DS_Store
+Thumbs.db

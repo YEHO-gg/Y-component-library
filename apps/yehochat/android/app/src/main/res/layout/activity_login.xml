@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_page"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="36dp"
+        android:paddingRight="36dp"
+        android:paddingTop="64dp"
+        android:paddingBottom="40dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="YehoChat"
+            android:textColor="@color/text_body"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="6dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="和在乎的人说说话"
+            android:textColor="@color/text_sub"
+            android:textSize="14sp"
+            android:layout_marginBottom="56dp" />
+
+        <EditText
+            android:id="@+id/etAcc"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@drawable/field_bg"
+            android:hint="邮箱 或 UUID"
+            android:textColorHint="@color/text_hint"
+            android:textColor="@color/text_body"
+            android:textSize="16sp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:singleLine="true"
+            android:inputType="textEmailAddress"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/etPw"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@drawable/field_bg"
+            android:hint="密码"
+            android:textColorHint="@color/text_hint"
+            android:textColor="@color/text_body"
+            android:textSize="16sp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:singleLine="true"
+            android:inputType="textPassword"
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:id="@+id/boxCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:layout_marginBottom="8dp">
+
+            <EditText
+                android:id="@+id/etCode"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_weight="1"
+                android:background="@drawable/field_bg"
+                android:hint="邮箱验证码"
+                android:textColorHint="@color/text_hint"
+                android:textColor="@color/text_body"
+                android:textSize="16sp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:singleLine="true"
+                android:inputType="number" />
+
+            <Button
+                android:id="@+id/btnSendCode"
+                android:layout_width="wrap_content"
+                android:layout_height="52dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/btn_ghost"
+                android:text="获取验证码"
+                android:textColor="@color/text_primary"
+                android:textSize="13sp"
+                android:textAllCaps="false" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="用验证码登录"
+            android:textColor="@color/text_primary"
+            android:textSize="13sp"
+            android:paddingTop="6dp"
+            android:paddingBottom="28dp"
+            android:paddingRight="8dp" />
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@drawable/btn_primary"
+            android:text="登录"
+            android:textColor="@color/text_on_accent"
+            android:textSize="17sp"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btnToReg"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="12dp"
+            android:background="@android:color/transparent"
+            android:text="还没有账号？去注册"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:textAllCaps="false" />
+
+        <TextView
+            android:id="@+id/tvForgot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="6dp"
+            android:text="忘记密码？"
+            android:textColor="@color/text_sub"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+</ScrollView>

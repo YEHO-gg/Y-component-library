@@ -1,0 +1,74 @@
+plugins {
+    id 'com.android.application'
+}
+
+// 服务器地址与端口：从 gradle.properties、-P 参数或环境变量读取。
+// 源码里不出现真实 IP —— 想连自己的服务器时，在 ~/.gradle/gradle.properties 或项目根的
+// gradle.properties（已 gitignore）里写：
+//     chatHost=你的域名或IP
+//     chatWsPort=8705
+//     chatGatePort=8443
+def chatHost = (project.findProperty('chatHost') ?: System.getenv('CHAT_HOST') ?: '127.0.0.1')
+def chatWsPort = (project.findProperty('chatWsPort') ?: System.getenv('CHAT_WS_PORT') ?: '8705')
+def chatGatePort = (project.findProperty('chatGatePort') ?: System.getenv('CHAT_GATE_PORT') ?: '8443')
+
+// 签名：只有 keystore.properties 存在时才启用发布签名。
+// 该文件与 p12 都在 .gitignore 里，仓库里永远没有私钥。
+def keystorePropsFile = rootProject.file('keystore.properties')
+def keystoreProps = new Properties()
+if (keystorePropsFile.exists()) {
+    keystoreProps.load(new FileInputStream(keystorePropsFile))
+}
+
+android {
+    namespace 'com.yeho.chat'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'com.yeho.chat'
+        minSdk 24
+        targetSdk 34
+        versionCode 6
+        versionName '1.5'
+
+        buildConfigField "String", "CHAT_HOST", "\"${chatHost}\""
+        buildConfigField "String", "CHAT_WS_PORT", "\"${chatWsPort}\""
+        buildConfigField "String", "CHAT_GATE_PORT", "\"${chatGatePort}\""
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    signingConfigs {
+        if (keystorePropsFile.exists()) {
+            release {
+                storeFile rootProject.file(keystoreProps['storeFile'] ?: 'app/release.p12')
+                storePassword keystoreProps['storePassword']
+                keyAlias keystoreProps['keyAlias']
+                keyPassword keystoreProps['keyPassword']
+                storeType keystoreProps['storeType'] ?: 'PKCS12'
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            if (keystorePropsFile.exists()) signingConfig signingConfigs.release
+        }
+        release {
+            minifyEnabled false
+            if (keystorePropsFile.exists()) signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+}

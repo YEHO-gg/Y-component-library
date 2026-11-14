@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      夜间主题：只翻两个开关，其余全部继承 values/themes.xml。
+
+      windowLightStatusBar / windowLightNavigationBar 是"图标用不用深色"的意思：
+        浅色模式 true  -> 深色图标配浅底
+        夜间模式 false -> 浅色图标配深底
+      忘了翻这两个的话，深色底 + 深色图标 = 状态栏上的时间电量全看不见。
+    -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/bg_page</item>
+        <item name="android:statusBarColor">@color/bg_card</item>
+        <item name="android:navigationBarColor">@color/bg_card</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:textColorPrimary">@color/text_body</item>
+        <item name="android:textColorSecondary">@color/text_sub</item>
+        <item name="android:textColorHint">@color/text_hint</item>
+        <item name="colorAccent">@color/text_primary</item>
+        <item name="colorPrimary">@color/text_primary</item>
+        <item name="colorPrimaryDark">@color/bg_card</item>
+        <item name="colorControlNormal">@color/text_muted</item>
+        <item name="colorControlActivated">@color/text_primary</item>
+    </style>
+</resources>

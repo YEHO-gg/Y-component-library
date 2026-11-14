@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  右下角「回到最底部 / N 条新消息」浮层底：主色药丸形。
+  颜色带一点透明（jump_bg），压在消息上时不至于糊成一块死色。
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/jump_bg" />
+    <corners android:radius="18dp" />
+</shape>
