@@ -17,6 +17,7 @@
 | 部件 | 说明 | 文档 |
 |---|---|---|
 | [YehoChat](#yehochat) | 自建小圈子聊天：Python 服务端 + Android 客户端 | [docs/yehochat.md](docs/yehochat.md) |
+| [CHRONOS 时光](#chronos-时光) | 零依赖在线时钟：世界时间 / 秒表 / 倒计时 | [docs/chronos.md](docs/chronos.md) |
 
 ### 📖 文档 `docs/`
 
@@ -26,6 +27,8 @@
 | [YehoChat 总览](docs/yehochat.md) | 有什么、怎么跑、设计选择 |
 | [部署方案](docs/yehochat-deploy.md) | systemd + nginx + 证书 + 管理口令 |
 | [协议要点](docs/yehochat-protocol.md) | 登录 / 收发 / 撤回 / 名册 / 身份 |
+| [CHRONOS 用法](docs/chronos.md) | 功能、快捷键、文件结构 |
+| [CHRONOS 部署](docs/chronos-deploy.md) | Nginx 静态托管、缓存与安全头、HTTPS、子路径 |
 
 ---
 
@@ -83,9 +86,13 @@ packages/                 可复用组件（pip 装得走的那种）
    └─ pyproject.toml
 
 apps/                     完整应用（要部署的）
-└─ yehochat/              自建小圈子聊天
-   ├─ server/             Python 服务端（3 个进程）
-   └─ android/            Android 客户端
+├─ yehochat/              自建小圈子聊天
+│  ├─ server/             Python 服务端（3 个进程）
+│  └─ android/            Android 客户端
+└─ chronos/               CHRONOS 在线时钟
+   ├─ index.html          页面
+   ├─ styles.css / app.js 样式与逻辑
+   └─ deploy/nginx.conf   Nginx 配置
 
 docs/                     文档（见上方索引）
 ```
