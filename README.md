@@ -1,6 +1,7 @@
 # Y-component-library
 
-自用的一个"组件 + 应用"合集。能单独拿走的放 `packages/`，能整套部署的放 `apps/`。
+自用的一个"组件 + 应用"合集。能单独拿走的放 `packages/`，能整套部署的放 `apps/`，
+给 AI 助手用的行为准则放 `skills/`。
 
 ---
 
@@ -19,6 +20,16 @@
 | [YehoChat](#yehochat) | 自建小圈子聊天：Python 服务端 + Android 客户端 | [docs/yehochat.md](docs/yehochat.md) |
 | [CHRONOS 时光](#chronos-时光) | 零依赖在线时钟：世界时间 / 秒表 / 倒计时 | [docs/chronos.md](docs/chronos.md) |
 
+### 🧠 技能 `skills/`
+
+给 AI 编码助手用的**行为准则**（不是能力扩展）。拷进 `~/.dsh/skills/` 即生效，DSH 带文件监听、不用重启。
+
+| 技能 | 什么时候用 | 干什么 |
+|---|---|---|
+| [grill-me](#grill-me) | 需求含糊、要多文件改动 | 先复述、列空白、拆成带验收标准的步骤 |
+| [tdd](#tdd) | 写代码、改逻辑、修 bug | 先写出一个会失败的检查，再让它通过 |
+| [triage](#triage) | 报错、行为异常 | 先定位根因再改，别靠猜 |
+
 ### 📖 文档 `docs/`
 
 | 文档 | 内容 |
@@ -29,6 +40,7 @@
 | [协议要点](docs/yehochat-protocol.md) | 登录 / 收发 / 撤回 / 名册 / 身份 |
 | [CHRONOS 用法](docs/chronos.md) | 功能、快捷键、文件结构 |
 | [CHRONOS 部署](docs/chronos-deploy.md) | Nginx 静态托管、缓存与安全头、HTTPS、子路径 |
+| [技能（SKILL.md）](docs/skills.md) | 格式、安装路径、三个技能的正文与由来 |
 
 ---
 
@@ -84,6 +96,33 @@ Android 端在 `apps/yehochat/android`，服务器地址走 gradle 属性，不�
     python -m http.server 8000
 
 预览图：`apps/chronos/preview.png`。部署是纯静态：Nginx 配置在 `apps/chronos/deploy/nginx.conf`，步骤见 [docs/chronos-deploy.md](docs/chronos-deploy.md)。
+
+## grill-me
+
+动手前先问清楚。用在需求含糊、要改多个文件、或者对方只丢来一句话的时候。
+
+四步：一句话复述 → 列出必须问清的空白（**最多 3 个，能自己查到的不要问**）→ 拆步骤、每步写验收标准 → 不可逆的步骤单独标出来先确认。
+
+写不出验收标准，就说明这步还没想清楚。
+
+## tdd
+
+先说清怎么验证，再动手写。
+
+核心一句：**在写实现之前，先写出一个此刻会失败的检查。** 没红过的检查，你不知道它在测什么，也不知道它会不会永远绿。
+
+汇报必须给三样：检查是什么、改之前真的红过（贴失败输出）、改之后是绿的（贴通过输出）。
+
+## triage
+
+先定位，再动手。改代码之前先回答：**我确切知道是哪一行、哪个条件出的问题吗？**
+
+拿到原文证据 → 先复现 → 写至少两个假设、每个配一个能证伪它的实验 → 二分收窄 → 区分现象和原因 → 找到根因才改 → 用同一套复现步骤验证。
+
+只列一个假设然后去找支持它的证据，那叫确认偏误。
+
+三份正文都在 `skills/<name>/SKILL.md`，装法与由来见 [docs/skills.md](docs/skills.md)。
+
 ## 仓库结构
 
 ```
@@ -102,6 +141,11 @@ apps/                     完整应用（要部署的）
    ├─ index.html          页面
    ├─ styles.css / app.js 样式与逻辑
    └─ deploy/nginx.conf   Nginx 配置
+
+skills/                   给 AI 助手的行为准则（SKILL.md）
+├─ grill-me/             先问清再拆步骤
+├─ tdd/                  先写会失败的检查
+└─ triage/               先定位根因再改
 
 docs/                     文档（见上方索引）
 ```
